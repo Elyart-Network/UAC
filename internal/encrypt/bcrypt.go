@@ -2,16 +2,14 @@ package encrypt
 
 import (
 	"golang.org/x/crypto/bcrypt"
-	"log"
 )
 
-func BcryptE(ctx string) string {
+func BcryptE(ctx string) (string, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(ctx), bcrypt.DefaultCost)
 	if err != nil {
-		log.Println("bcrypt error: ", err)
-		return ""
+		return "", err
 	}
-	return string(hash)
+	return string(hash), nil
 }
 
 func BcryptV(hash, ctx string) bool {
