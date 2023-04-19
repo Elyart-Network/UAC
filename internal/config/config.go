@@ -9,10 +9,6 @@ func init() {
 	// Read global config
 	viper.SetConfigFile("config.yaml")
 	viper.SetDefault("Server", serverDef)
-	viper.SetDefault("Database", databaseDef)
-	viper.SetDefault("Queue", queueDef)
-	viper.SetDefault("Cache", cacheDef)
-	viper.SetDefault("Search", searchDef)
 	conf := &config{}
 	if err := viper.ReadInConfig(); err != nil {
 		log.Println("Can't read config, trying to modify!")

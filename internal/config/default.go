@@ -5,19 +5,3 @@ var serverDef = server{
 	DebugMode:  true,
 	FileLogger: false,
 }
-
-var databaseDef = database{
-	Type: "internal",
-}
-
-var queueDef = queue{
-	Type: "internal",
-}
-
-var cacheDef = cache{
-	Type: "internal",
-}
-
-var searchDef = search{
-	Type: "internal",
-}

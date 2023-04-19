@@ -30,8 +30,16 @@ func Start() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	db := drivers.Database(config.Get("handlers.host").(string))
-	actions.New(db)
+	dsn := drivers.DSN{
+		Host:     config.DBHost(),
+		Port:     config.DBPort(),
+		User:     config.DBUser(),
+		Password: config.DBPass(),
+		Name:     config.DBName(),
+		SSL:      config.DBSSL(),
+		TimeZone: config.SysTZ(),
+	}
+	actions.New(drivers.Database(dsn))
 
 	engine := gin.Default()
 	engine.Use(gin.Recovery())

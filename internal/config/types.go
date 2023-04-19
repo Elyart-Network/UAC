@@ -15,7 +15,6 @@ type server struct {
 }
 
 type database struct {
-	Type     string `yaml:"type"`
 	Host     string `yaml:"host"`
 	Name     string `yaml:"name"`
 	Username string `yaml:"username"`
@@ -23,7 +22,6 @@ type database struct {
 }
 
 type queue struct {
-	Type      string `yaml:"type"`
 	Host      string `yaml:"host"`
 	IndexName string `yaml:"index_name"`
 	Username  string `yaml:"username"`
@@ -31,7 +29,6 @@ type queue struct {
 }
 
 type cache struct {
-	Type      string `yaml:"type"`
 	Host      string `yaml:"host"`
 	IndexName string `yaml:"index_name"`
 	Username  string `yaml:"username"`
@@ -39,7 +36,6 @@ type cache struct {
 }
 
 type search struct {
-	Type      string `yaml:"type"`
 	Host      string `yaml:"host"`
 	IndexName string `yaml:"index_name"`
 	Username  string `yaml:"username"`
