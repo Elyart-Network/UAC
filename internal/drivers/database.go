@@ -23,7 +23,7 @@ func Database(dsn DSN) *gorm.DB {
 	if err != nil {
 		log.Fatalln("Can't connect to handlers!\n", err)
 	}
-	err = db.AutoMigrate(&models.Clients{}, &models.Credentials{}, &models.Users{}, &models.Tokens{})
+	err = db.AutoMigrate(&models.Clients{}, models.Providers{}, &models.Credentials{}, &models.Users{}, &models.Tokens{})
 	if err != nil {
 		log.Fatalln("Migrate handlers failed!\n", err)
 	}

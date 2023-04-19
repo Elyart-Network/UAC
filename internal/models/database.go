@@ -5,7 +5,15 @@ type Clients struct {
 	Name     string `json:"name" gorm:"not null"`
 	Secret   string `json:"secret" gorm:"not null"`
 	Type     string `json:"type" gorm:"not null"`
+	Provider int    `json:"provider"`
 	Addition string `json:"addition"`
+}
+
+type Providers struct {
+	ID   int    `json:"id" gorm:"primaryKey;autoIncrement;not null"`
+	Name string `json:"name" gorm:"not null"`
+	Type string `json:"type" gorm:"not null"`
+	Data string `json:"data" gorm:"not null"`
 }
 
 type Credentials struct {
