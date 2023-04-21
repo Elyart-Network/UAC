@@ -13,6 +13,14 @@ func SysTZ() string {
 	return tz
 }
 
+func Docker() bool {
+	docker := os.Getenv("DOCKER_MODE")
+	if docker == "" || docker == "false" {
+		return false
+	}
+	return true
+}
+
 func DBHost() string {
 	host := os.Getenv("DB_HOST")
 	if host == "" {
