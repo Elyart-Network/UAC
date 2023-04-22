@@ -27,6 +27,7 @@ type Users struct {
 	Username string `json:"username" gorm:"not null;unique"`
 	Password string `json:"password" gorm:"not null;unique"`
 	Email    string `json:"email" gorm:"not null;unique"`
+	Verified int64  `json:"verified" gorm:"not null;default:0"`
 	Addition string `json:"addition"`
 }
 
