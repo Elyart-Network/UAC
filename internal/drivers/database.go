@@ -7,7 +7,7 @@ import (
 	"log"
 )
 
-type DSN struct {
+type DBDSN struct {
 	Host     string
 	Port     string
 	User     string
@@ -17,7 +17,7 @@ type DSN struct {
 	TimeZone string
 }
 
-func Database(dsn DSN) *gorm.DB {
+func Database(dsn DBDSN) *gorm.DB {
 	c := "host=" + dsn.Host + " port=" + dsn.Port + " user=" + dsn.User + " dbname=" + dsn.Name + " password=" + dsn.Password + " sslmode=" + dsn.SSL + " TimeZone=" + dsn.TimeZone
 	db, err := gorm.Open(postgres.Open(c), &gorm.Config{})
 	if err != nil {

@@ -30,7 +30,7 @@ func Start() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	dsn := drivers.DSN{
+	dbdsn := drivers.DBDSN{
 		Host:     config.DBHost(),
 		Port:     config.DBPort(),
 		User:     config.DBUser(),
@@ -39,7 +39,14 @@ func Start() {
 		SSL:      config.DBSSL(),
 		TimeZone: config.SysTZ(),
 	}
-	actions.New(drivers.Database(dsn))
+	rdsn := drivers.RedisDSN{
+		Hosts:    config.RedisHosts(),
+		Master:   config.RedisMaster(),
+		Username: config.RedisUser(),
+		Password: config.RedisPass(),
+		DB:       config.RedisDB(),
+	}
+	actions.New(drivers.Database(dbdsn), drivers.Redis(rdsn))
 
 	engine := gin.Default()
 	engine.Use(gin.Recovery())

@@ -9,6 +9,8 @@ func init() {
 	// Read global config
 	viper.SetConfigFile("config.yaml")
 	viper.SetDefault("Server", serverDef)
+	viper.SetDefault("Postgres", postgresDef)
+	viper.SetDefault("Redis", redisDef)
 	conf := &config{}
 	if err := viper.ReadInConfig(); err != nil {
 		log.Println("Can't read config, trying to modify!")
