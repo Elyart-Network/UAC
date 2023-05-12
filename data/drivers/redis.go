@@ -3,7 +3,7 @@ package drivers
 import (
 	"context"
 	"github.com/redis/go-redis/v9"
-	"log"
+	"github.com/sirupsen/logrus"
 )
 
 type RedisDSN struct {
@@ -29,8 +29,8 @@ func Redis(dsn RedisDSN) *RedisClient {
 	ctx := context.Background()
 	ping, err := rdb.Ping(ctx).Result()
 	if err != nil {
-		log.Panicln("Redis ping error:", err)
+		logrus.Errorf("[Redis] Redis ping error: %s", err)
 	}
-	log.Println("Redis ping:", ping)
+	logrus.Debugf("[Redis] Redis ping: %s", ping)
 	return &RedisClient{rdb}
 }

@@ -1,8 +1,8 @@
 package config
 
 import (
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"log"
 )
 
 func init() {
@@ -13,20 +13,20 @@ func init() {
 	viper.SetDefault("Redis", redisDef)
 	conf := &config{}
 	if err := viper.ReadInConfig(); err != nil {
-		log.Println("Can't read config, trying to modify!")
+		logrus.Info("[Config] Config file not found, creating...")
 		if err := viper.WriteConfig(); err != nil {
-			log.Panicln("Error writing config!")
+			logrus.Errorf("[Config] Can't write config: %s", err)
 		}
 	}
 	if err := viper.Unmarshal(conf); err != nil {
-		log.Fatal(err)
+		logrus.Fatalf("[Config] Unable to decode into struct: %s", err)
 	}
 }
 
 func Get(key string) interface{} {
 	viper.SetConfigFile("config.yaml")
 	if err := viper.ReadInConfig(); err != nil {
-		log.Panicln("Error reading config!")
+		logrus.Errorf("[Config] Error reading config: %s", err)
 	}
 	return viper.Get(key)
 }
@@ -34,7 +34,7 @@ func Get(key string) interface{} {
 func Set(key string, value interface{}) {
 	viper.SetConfigFile("config.yaml")
 	if err := viper.ReadInConfig(); err != nil {
-		log.Panicln("Error reading config!")
+		logrus.Errorf("[Config] Error reading config: %s", err)
 	}
 	viper.Set(key, value)
 }

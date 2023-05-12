@@ -1,8 +1,10 @@
 package actions
 
-import "github.com/Elyart-Network/UAC/internal/models"
+import (
+	"github.com/Elyart-Network/UAC/model"
+)
 
-func AddProvider(provider models.Providers) (int64, error) {
+func AddProvider(provider model.Providers) (int64, error) {
 	db := handler.Database
 	res := db.Create(&provider)
 	if res.Error != nil {
@@ -11,17 +13,17 @@ func AddProvider(provider models.Providers) (int64, error) {
 	return res.RowsAffected, nil
 }
 
-func GetProvider(id int) (models.Providers, error) {
+func GetProvider(uuid string) (model.Providers, error) {
 	db := handler.Database
-	var provider models.Providers
-	res := db.Where("id = ?", id).First(&provider)
+	var provider model.Providers
+	res := db.Where("uuid = ?", uuid).First(&provider)
 	if res.Error != nil {
 		return provider, res.Error
 	}
 	return provider, nil
 }
 
-func UpdateProvider(provider models.Providers) (int64, error) {
+func UpdateProvider(provider model.Providers) (int64, error) {
 	db := handler.Database
 	res := db.Save(&provider)
 	if res.Error != nil {
@@ -32,7 +34,7 @@ func UpdateProvider(provider models.Providers) (int64, error) {
 
 func DeleteProvider(id int) (int64, error) {
 	db := handler.Database
-	res := db.Where("id = ?", id).Delete(&models.Providers{})
+	res := db.Where("id = ?", id).Delete(&model.Providers{})
 	if res.Error != nil {
 		return 0, res.Error
 	}

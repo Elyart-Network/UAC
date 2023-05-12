@@ -1,8 +1,10 @@
 package actions
 
-import "github.com/Elyart-Network/UAC/internal/models"
+import (
+	"github.com/Elyart-Network/UAC/model"
+)
 
-func AddToken(token models.Tokens) (int64, error) {
+func AddToken(token model.Tokens) (int64, error) {
 	db := handler.Database
 	res := db.Create(&token)
 	if res.Error != nil {
@@ -11,17 +13,17 @@ func AddToken(token models.Tokens) (int64, error) {
 	return res.RowsAffected, nil
 }
 
-func GetToken(token string) (models.Tokens, error) {
+func GetToken(uuid string) (model.Tokens, error) {
 	db := handler.Database
-	var dbs models.Tokens
-	res := db.Where("token = ?", token).First(&dbs)
+	var dbs model.Tokens
+	res := db.Where("uuid = ?", uuid).First(&dbs)
 	if res.Error != nil {
 		return dbs, res.Error
 	}
 	return dbs, nil
 }
 
-func UpdateToken(token models.Tokens) (int64, error) {
+func UpdateToken(token model.Tokens) (int64, error) {
 	db := handler.Database
 	res := db.Save(&token)
 	if res.Error != nil {
@@ -30,9 +32,9 @@ func UpdateToken(token models.Tokens) (int64, error) {
 	return res.RowsAffected, nil
 }
 
-func DeleteToken(token string) (int64, error) {
+func DeleteToken(uuid string) (int64, error) {
 	db := handler.Database
-	res := db.Where("token = ?", token).Delete(&models.Tokens{})
+	res := db.Where("uuid = ?", uuid).Delete(&model.Tokens{})
 	if res.Error != nil {
 		return 0, res.Error
 	}

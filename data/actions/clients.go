@@ -1,8 +1,10 @@
 package actions
 
-import "github.com/Elyart-Network/UAC/internal/models"
+import (
+	"github.com/Elyart-Network/UAC/model"
+)
 
-func AddClient(client models.Clients) (int64, error) {
+func AddClient(client model.Clients) (int64, error) {
 	db := handler.Database
 	res := db.Create(&client)
 	if res.Error != nil {
@@ -11,17 +13,17 @@ func AddClient(client models.Clients) (int64, error) {
 	return res.RowsAffected, nil
 }
 
-func GetClient(id int) (models.Clients, error) {
+func GetClient(uuid string) (model.Clients, error) {
 	db := handler.Database
-	var client models.Clients
-	res := db.Where("id = ?", id).First(&client)
+	var client model.Clients
+	res := db.Where("uuid = ?", uuid).First(&client)
 	if res.Error != nil {
 		return client, res.Error
 	}
 	return client, nil
 }
 
-func UpdateClient(client models.Clients) (int64, error) {
+func UpdateClient(client model.Clients) (int64, error) {
 	db := handler.Database
 	res := db.Save(&client)
 	if res.Error != nil {
@@ -30,9 +32,9 @@ func UpdateClient(client models.Clients) (int64, error) {
 	return res.RowsAffected, nil
 }
 
-func DeleteClient(id int) (int64, error) {
+func DeleteClient(uuid string) (int64, error) {
 	db := handler.Database
-	res := db.Where("id = ?", id).Delete(&models.Clients{})
+	res := db.Where("uuid = ?", uuid).Delete(&model.Clients{})
 	if res.Error != nil {
 		return 0, res.Error
 	}

@@ -1,13 +1,13 @@
 package drivers
 
 import (
-	"github.com/Elyart-Network/UAC/internal/models"
+	"github.com/Elyart-Network/UAC/model"
+	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"log"
 )
 
-type DBDSN struct {
+type PostgresDSN struct {
 	Host     string
 	Port     string
 	User     string
@@ -17,15 +17,15 @@ type DBDSN struct {
 	TimeZone string
 }
 
-func Database(dsn DBDSN) *gorm.DB {
+func Postgres(dsn PostgresDSN) *gorm.DB {
 	c := "host=" + dsn.Host + " port=" + dsn.Port + " user=" + dsn.User + " dbname=" + dsn.Name + " password=" + dsn.Password + " sslmode=" + dsn.SSL + " TimeZone=" + dsn.TimeZone
 	db, err := gorm.Open(postgres.Open(c), &gorm.Config{})
 	if err != nil {
-		log.Fatalln("Can't connect to handlers!\n", err)
+		logrus.Fatalf("[Postgres] Can't connect to handlers! %s", err)
 	}
-	err = db.AutoMigrate(&models.Clients{}, models.Providers{}, &models.Credentials{}, &models.Users{}, &models.Tokens{})
+	err = db.AutoMigrate(&model.Clients{}, model.Providers{}, &model.Credentials{}, &model.Users{}, &model.Tokens{})
 	if err != nil {
-		log.Fatalln("Migrate handlers failed!\n", err)
+		logrus.Fatalf("[Postgres] Migrate handlers failed! %s", err)
 	}
 	return db
 }

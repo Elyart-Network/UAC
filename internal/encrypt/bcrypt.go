@@ -12,10 +12,10 @@ func BcryptE(ctx string) (string, error) {
 	return string(hash), nil
 }
 
-func BcryptV(hash, ctx string) bool {
+func BcryptV(hash, ctx string) (bool, error) {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(ctx))
 	if err != nil {
-		return false
+		return false, err
 	}
-	return true
+	return true, nil
 }

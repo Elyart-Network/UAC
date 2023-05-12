@@ -1,15 +1,27 @@
 package server
 
 import (
-	"github.com/Elyart-Network/UAC/internal/actions"
-	"github.com/Elyart-Network/UAC/internal/config"
-	"github.com/Elyart-Network/UAC/internal/drivers"
+	"github.com/Elyart-Network/UAC/config"
+	"github.com/Elyart-Network/UAC/middleware"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"io"
 	"log"
 	"net/http"
 	"os"
 )
+
+func init() {
+
+	// set log level
+	logLevel, err := logrus.ParseLevel(config.Get("server.log_level").(string))
+	if err != nil {
+		logLevel = logrus.InfoLevel
+	}
+
+	logrus.SetLevel(logLevel)
+	logrus.SetFormatter(&logrus.JSONFormatter{})
+}
 
 func Start() {
 	FileLogger := config.Get("server.file_logger").(bool)
@@ -30,30 +42,13 @@ func Start() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	dbdsn := drivers.DBDSN{
-		Host:     config.DBHost(),
-		Port:     config.DBPort(),
-		User:     config.DBUser(),
-		Password: config.DBPass(),
-		Name:     config.DBName(),
-		SSL:      config.DBSSL(),
-		TimeZone: config.SysTZ(),
-	}
-	rdsn := drivers.RedisDSN{
-		Hosts:    config.RedisHosts(),
-		Master:   config.RedisMaster(),
-		Username: config.RedisUser(),
-		Password: config.RedisPass(),
-		DB:       config.RedisDB(),
-	}
-	actions.New(drivers.Database(dbdsn), drivers.Redis(rdsn))
-
 	engine := gin.Default()
 	engine.Use(gin.Recovery())
+	engine.Use(middleware.LoggingMiddleware())
 	Entry(engine)
 
 	err := http.ListenAndServe(":"+ServerPort, engine)
 	if err != nil {
-		log.Panicln(err)
+		logrus.Fatalf("[Server] Failed to start server: %v", err)
 	}
 }

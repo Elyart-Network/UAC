@@ -1,7 +1,7 @@
 package actions
 
 import (
-	"github.com/Elyart-Network/UAC/internal/drivers"
+	"github.com/Elyart-Network/UAC/data/drivers"
 	"gorm.io/gorm"
 )
 

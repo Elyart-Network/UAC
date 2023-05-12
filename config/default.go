@@ -4,6 +4,7 @@ var serverDef = server{
 	ListenPort: "3000",
 	DebugMode:  true,
 	FileLogger: false,
+	LogLevel:   "debug",
 }
 
 var postgresDef = postgres{
@@ -12,5 +13,5 @@ var postgresDef = postgres{
 }
 
 var redisDef = redis{
-	Hosts: []string{"localhost:6379"},
+	Hosts: []string{":6379"},
 }

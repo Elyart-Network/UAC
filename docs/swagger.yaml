@@ -1,0 +1,86 @@
+info:
+  contact: {}
+paths:
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Check if the server is up and running
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Health Check
+      tags:
+      - Core
+  /uac/auth:
+    get:
+      description: Authorize Users under Provider Mode
+      responses:
+        "302":
+          description: <callback.uri>?code=[auth_code]
+      summary: AuthProvider Endpoint
+      tags:
+      - UAC
+    post:
+      consumes:
+      - application/json
+      description: Authorize Users under Datasource Mode
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Authorize Endpoint
+      tags:
+      - UAC
+  /uac/cert:
+    post:
+      consumes:
+      - application/json
+      description: Generate and Maintain Certs
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Cert Endpoint
+      tags:
+      - UAC
+  /uac/token:
+    post:
+      consumes:
+      - application/json
+      description: Generate and Maintain Tokens
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Token Endpoint
+      tags:
+      - UAC
+    put:
+      consumes:
+      - application/json
+      description: Refresh Tokens
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Refresh Endpoint
+      tags:
+      - UAC
+swagger: "2.0"
