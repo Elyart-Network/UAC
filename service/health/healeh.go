@@ -1,6 +1,9 @@
 package health
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/Elyart-Network/UAC/utils"
+	"github.com/gin-gonic/gin"
+)
 
 // Service godoc
 // @Summary Health Check
@@ -11,7 +14,5 @@ import "github.com/gin-gonic/gin"
 // @Success 200 {object} string "OK"
 // @Router /health [get]
 func Service(ctx *gin.Context) {
-	ctx.JSON(200, gin.H{
-		"status": "OK",
-	})
+	utils.BaseResponse(ctx, 200, "OK", nil)
 }

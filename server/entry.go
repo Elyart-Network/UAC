@@ -17,8 +17,6 @@ func Entry(e *gin.Engine) {
 	{
 		uacRoute.POST("/token", uac.TokenService)
 		uacRoute.PUT("/token", uac.RefreshService)
-		uacRoute.POST("/cert", uac.CertService)
-		uacRoute.GET("/auth", uac.AuthProviderService)
-		uacRoute.POST("/auth", uac.AuthorizeService)
+		uacRoute.GET("/auth", uac.AuthorizeService)
 	}
 }
