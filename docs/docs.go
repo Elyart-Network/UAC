@@ -41,58 +41,14 @@ const docTemplate = `{
         },
         "/uac/auth": {
             "get": {
-                "description": "Authorize Users under Provider Mode",
-                "tags": [
-                    "UAC"
-                ],
-                "summary": "AuthProvider Endpoint",
-                "responses": {
-                    "302": {
-                        "description": "\u003ccallback.uri\u003e?code=[auth_code]"
-                    }
-                }
-            },
-            "post": {
-                "description": "Authorize Users under Datasource Mode",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
+                "description": "Authorize Users",
                 "tags": [
                     "UAC"
                 ],
                 "summary": "Authorize Endpoint",
                 "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/uac/cert": {
-            "post": {
-                "description": "Generate and Maintain Certs",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "UAC"
-                ],
-                "summary": "Cert Endpoint",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
+                    "302": {
+                        "description": "\u003ccallback.uri\u003e?code=[auth_code]"
                     }
                 }
             }
@@ -114,7 +70,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/model.UAToken"
                         }
                     }
                 }
@@ -135,9 +91,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/model.UAToken"
                         }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.UAToken": {
+            "type": "object",
+            "properties": {
+                "ua_token": {
+                    "type": "string"
                 }
             }
         }

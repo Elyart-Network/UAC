@@ -15,3 +15,5 @@ var postgresDef = postgres{
 var redisDef = redis{
 	Hosts: []string{":6379"},
 }
+
+var encDef = encrypt{}

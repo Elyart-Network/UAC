@@ -31,7 +31,7 @@ type Users struct {
 	Username string `json:"username" gorm:"not null;unique"`
 	Password string `json:"password" gorm:"not null;unique"`
 	Identity string `json:"identity" gorm:"not null;unique"`
-	Verified bool   `json:"verified" gorm:"not null;default:false"`
+	IsAdmin  bool   `json:"is_admin" gorm:"not null;default:false"`
 	Addition string `json:"addition"`
 }
 

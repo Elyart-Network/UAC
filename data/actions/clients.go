@@ -4,7 +4,13 @@ import (
 	"github.com/Elyart-Network/UAC/model"
 )
 
-func AddClient(client model.Clients) (int64, error) {
+type Client struct{}
+
+func NewClient() *Client {
+	return &Client{}
+}
+
+func (c *Client) Insert(client model.Clients) (int64, error) {
 	db := handler.Database
 	res := db.Create(&client)
 	if res.Error != nil {
@@ -13,7 +19,7 @@ func AddClient(client model.Clients) (int64, error) {
 	return res.RowsAffected, nil
 }
 
-func GetClient(uuid string) (model.Clients, error) {
+func (c *Client) Get(uuid string) (model.Clients, error) {
 	db := handler.Database
 	var client model.Clients
 	res := db.Where("uuid = ?", uuid).First(&client)
@@ -23,7 +29,7 @@ func GetClient(uuid string) (model.Clients, error) {
 	return client, nil
 }
 
-func UpdateClient(client model.Clients) (int64, error) {
+func (c *Client) Update(client model.Clients) (int64, error) {
 	db := handler.Database
 	res := db.Save(&client)
 	if res.Error != nil {
@@ -32,7 +38,7 @@ func UpdateClient(client model.Clients) (int64, error) {
 	return res.RowsAffected, nil
 }
 
-func DeleteClient(uuid string) (int64, error) {
+func (c *Client) Delete(uuid string) (int64, error) {
 	db := handler.Database
 	res := db.Where("uuid = ?", uuid).Delete(&model.Clients{})
 	if res.Error != nil {

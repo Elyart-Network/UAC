@@ -4,7 +4,13 @@ import (
 	"github.com/Elyart-Network/UAC/model"
 )
 
-func AddToken(token model.Tokens) (int64, error) {
+type Token struct{}
+
+func NewToken() *Token {
+	return &Token{}
+}
+
+func (t *Token) Insert(token model.Tokens) (int64, error) {
 	db := handler.Database
 	res := db.Create(&token)
 	if res.Error != nil {
@@ -13,7 +19,7 @@ func AddToken(token model.Tokens) (int64, error) {
 	return res.RowsAffected, nil
 }
 
-func GetToken(uuid string) (model.Tokens, error) {
+func (t *Token) Get(uuid string) (model.Tokens, error) {
 	db := handler.Database
 	var dbs model.Tokens
 	res := db.Where("uuid = ?", uuid).First(&dbs)
@@ -23,7 +29,7 @@ func GetToken(uuid string) (model.Tokens, error) {
 	return dbs, nil
 }
 
-func UpdateToken(token model.Tokens) (int64, error) {
+func (t *Token) Update(token model.Tokens) (int64, error) {
 	db := handler.Database
 	res := db.Save(&token)
 	if res.Error != nil {
@@ -32,7 +38,7 @@ func UpdateToken(token model.Tokens) (int64, error) {
 	return res.RowsAffected, nil
 }
 
-func DeleteToken(uuid string) (int64, error) {
+func (t *Token) Delete(uuid string) (int64, error) {
 	db := handler.Database
 	res := db.Where("uuid = ?", uuid).Delete(&model.Tokens{})
 	if res.Error != nil {

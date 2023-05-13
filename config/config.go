@@ -11,6 +11,7 @@ func init() {
 	viper.SetDefault("Server", serverDef)
 	viper.SetDefault("Postgres", postgresDef)
 	viper.SetDefault("Redis", redisDef)
+	viper.SetDefault("Encrypt", encDef)
 	conf := &config{}
 	if err := viper.ReadInConfig(); err != nil {
 		logrus.Info("[Config] Config file not found, creating...")

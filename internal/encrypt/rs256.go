@@ -40,7 +40,7 @@ func RsaGenKey() (private, public []byte, err error) {
 	return
 }
 
-func RsaSignWithSha256(data []byte, keyBytes []byte) ([]byte, error) {
+func SignRS256(data []byte, keyBytes []byte) ([]byte, error) {
 	// Decode private key
 	h := sha256.New()
 	h.Write(data)
@@ -62,30 +62,29 @@ func RsaSignWithSha256(data []byte, keyBytes []byte) ([]byte, error) {
 		fmt.Printf("Error from signing: %s\n", err)
 		panic(err)
 	}
-
 	return signature, nil
 }
 
-func RsaVerySignWithSha256(data, signData, keyBytes []byte) (bool, error) {
+func VerifyRS256(data, signData, keyBytes []byte) error {
 	// Decode public key
 	block, _ := pem.Decode(keyBytes)
 	if block == nil {
-		return false, errors.New("public key error")
+		return errors.New("public key error")
 	}
 
 	// ParsePKIXPublicKey parses a DER encoded public key.
 	pubKey, err := x509.ParsePKIXPublicKey(block.Bytes)
 	if err != nil {
-		return false, err
+		return err
 	}
 
 	// Verify the signature
 	hashed := sha256.Sum256(data)
 	err = rsa.VerifyPKCS1v15(pubKey.(*rsa.PublicKey), crypto.SHA256, hashed[:], signData)
 	if err != nil {
-		return false, err
+		return err
 	}
-	return true, nil
+	return nil
 }
 
 func RsaEncrypt(data, keyBytes []byte) ([]byte, error) {

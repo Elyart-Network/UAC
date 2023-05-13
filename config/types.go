@@ -4,6 +4,7 @@ type config struct {
 	Server   server   `yaml:"server"`
 	Postgres postgres `yaml:"postgres"`
 	Redis    redis    `yaml:"redis"`
+	Encrypt  encrypt  `yaml:"encrypt"`
 }
 
 type server struct {
@@ -29,6 +30,7 @@ type redis struct {
 }
 
 type encrypt struct {
-	AccessKey  string `yaml:"access_key"`
-	RefreshKey string `yaml:"refresh_key"`
+	RSAPublic  string `yaml:"rsa_public"`
+	RSAPrivate string `yaml:"rsa_private"`
+	CodeSign   string `yaml:"code_sign"`
 }
